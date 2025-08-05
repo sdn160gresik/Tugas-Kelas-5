@@ -5,6 +5,17 @@
   <meta charset="UTF-8" />
   <title>Tugas Matematika</title>
   <style>
+
+.kotak-soal, .kotak-jawaban {
+  background-color: white;
+  border: 2px solid #add8e6;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  max-width: 600px;
+  width: 100%;
+}
+
     body {
       font-family: 'Arial', sans-serif;
       padding: 20px;
@@ -76,6 +87,9 @@
       margin-right: 10px;
     }
   </style>
+
+
+
 </head>
 <body>
   <div class="container">
@@ -84,7 +98,7 @@
       <a href="#">🔢 Matematika</a>
       <a href="Latihan Soal ipas Kelas 5.html">🧪 IPAS</a>
       <a href="Latihan Soal Seni Kelas 5.html">🎨 Seni</a>
-<a href="Soal_Matematika_Kelas_5.pdf" download>📥 Download</a>
+      <a href="Soal_Matematika_Kelas_5.pdf" download>📥 Download</a>
     </div>
 
     <h1 style="color: #2c3e50; text-align: center; margin-bottom: 30px; background-color: white; padding: 10px 20px; border-radius: 10px; border: 2px solid #add8e6;">Tugas Matematika</h1>
@@ -107,68 +121,22 @@
     </div>
   </div>
 
+  <!-- Audio -->
+  <audio id="suaraKlik" src="mouse-clicks-6849 (mp3cut.net).mp3"></audio>
+  <audio id="suaraPeringatan" src="tada-234709.mp3"></audio>
+
   <script>
     const soal = [
-      {
-        q: "1. 76.432 – 32.000 = …",
-        a: ["42.432", "44.432", "43.432", "45.432"],
-        k: 2
-      },
-      {
-        q: "2. 45.678 + 9.321 = …",
-        a: ["55.000", "54.999", "55.009", "54.889"],
-        k: 2
-      },
-      {
-        q: "3. Nilai tempat angka <b>6</b> pada 86.409 adalah …",
-        a: ["Ribuan", "Ratusan", "Puluhan ribu", "Satuan"],
-        k: 2
-      },
-      {
-        q: "4. 12.345 … 21.345",
-        a: [">", "<", "=", "≥"],
-        k: 1
-      },
-      {
-        q: "5. Hasil dari 98.765 – 45.321 adalah …",
-        a: ["53.444", "54.444", "55.444", "56.444"],
-        k: 1
-      },
-      {
-        q: "6. Nilai angka <b>3</b> pada 93.725 adalah …",
-        a: ["300", "30.000", "3.000", "3"],
-        k: 2
-      },
-      {
-        q: "7. 78.654 + 1.346 = …",
-        a: ["80.000", "80.010", "79.990", "79.900"],
-        k: 2
-      },
-      {
-        q: "8. 90.000, 9.000, 900, 90, 9 diurutkan dari yang terkecil adalah …",
-        a: [
-          "9, 90, 900, 9.000, 90.000",
-          "900, 90, 9.000, 9, 90.000",
-          "90.000, 9.000, 900, 90, 9",
-          "9.000, 9, 90.000, 900, 90"
-        ],
-        k: 0
-      },
-      {
-        q: "9. Nilai tempat angka <b>4</b> pada 42.678 adalah …",
-        a: ["Satuan", "Puluhan", "Puluhan ribu", "Ratusan"],
-        k: 2
-      },
-      {
-        q: "10. Urutkan dari yang terkecil: 65.432, 56.432, 75.432, 45.432",
-        a: [
-          "45.432, 56.432, 65.432, 75.432",
-          "75.432, 65.432, 56.432, 45.432",
-          "65.432, 56.432, 45.432, 75.432",
-          "56.432, 45.432, 75.432, 65.432"
-        ],
-        k: 0
-      }
+      { q: "1. 76.432 – 32.000 = …", a: ["42.432", "44.432", "43.432", "45.432"], k: 2 },
+      { q: "2. 45.678 + 9.321 = …", a: ["55.000", "54.999", "55.009", "54.889"], k: 2 },
+      { q: "3. Nilai tempat angka <b>6</b> pada 86.409 adalah …", a: ["Ribuan", "Ratusan", "Puluhan ribu", "Satuan"], k: 2 },
+      { q: "4. 12.345 … 21.345", a: [">", "<", "=", "≥"], k: 1 },
+      { q: "5. Hasil dari 98.765 – 45.321 adalah …", a: ["53.444", "54.444", "55.444", "56.444"], k: 1 },
+      { q: "6. Nilai angka <b>3</b> pada 93.725 adalah …", a: ["300", "30.000", "3.000", "3"], k: 2 },
+      { q: "7. 78.654 + 1.346 = …", a: ["80.000", "80.010", "79.990", "79.900"], k: 2 },
+      { q: "8. 90.000, 9.000, 900, 90, 9 diurutkan dari yang terkecil adalah …", a: ["9, 90, 900, 9.000, 90.000", "900, 90, 9.000, 9, 90.000", "90.000, 9.000, 900, 90, 9", "9.000, 9, 90.000, 900, 90"], k: 0 },
+      { q: "9. Nilai tempat angka <b>4</b> pada 42.678 adalah …", a: ["Satuan", "Puluhan", "Puluhan ribu", "Ratusan"], k: 2 },
+      { q: "10. Urutkan dari yang terkecil: 65.432, 56.432, 75.432, 45.432", a: ["45.432, 56.432, 65.432, 75.432", "75.432, 65.432, 56.432, 45.432", "65.432, 56.432, 45.432, 75.432", "56.432, 45.432, 75.432, 65.432"], k: 0 }
     ];
 
     let indeks = 0;
@@ -187,7 +155,7 @@
       quiz.innerHTML = `
         <div class="question">${s.q}</div>
         <div class="answers">
-          ${s.a.map((j, i) => `<label><input type="radio" name="jawaban" value="${i}" /> ${j}</label>`).join('')}
+          ${s.a.map((j, i) => `<label><input type="radio" name="jawaban" value="${i}" onclick="mainkanSuaraKlik()" /> ${j}</label>`).join('')}
         </div>
         <button onclick="periksaJawaban()">Next</button>
       `;
@@ -196,6 +164,7 @@
     function periksaJawaban() {
       const jawaban = document.querySelector('input[name="jawaban"]:checked');
       if (!jawaban) {
+        mainkanSuaraPeringatan();
         tampilkanPeringatan("Silakan pilih jawaban dulu!");
         return;
       }
@@ -230,6 +199,18 @@
       document.getElementById("result").innerText = "";
       document.getElementById("restart").style.display = "none";
       tampilkanSoal();
+    }
+
+    function mainkanSuaraKlik() {
+      const suara = document.getElementById("suaraKlik");
+      suara.currentTime = 0;
+      suara.play();
+    }
+
+    function mainkanSuaraPeringatan() {
+      const suara = document.getElementById("suaraPeringatan");
+      suara.currentTime = 0;
+      suara.play();
     }
 
     tampilkanSoal();
