@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,6 +26,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      position: relative;
     }
     .nav {
       display: flex;
@@ -79,12 +80,25 @@
 <body>
   <div class="container">
     <div class="nav">
-<a href="index.html">📘 Tugas Kelas 5</a>
+      <a href="index.html">📘 Tugas Kelas 5</a>
       <a href="#">🔢 Matematika</a>
       <a href="Latihan Soal ipas Kelas 5.html">🧪 IPAS</a>
       <a href="Latihan Soal Seni Kelas 5.html">🎨 Seni</a>
     </div>
+
     <h1 style="color: #2c3e50; text-align: center; margin-bottom: 30px; background-color: white; padding: 10px 20px; border-radius: 10px; border: 2px solid #add8e6;">Tugas Matematika</h1>
+
+    <!-- Petunjuk Mengerjakan -->
+    <div style="background-color: white; padding: 15px 20px; border-radius: 10px; border: 2px solid #add8e6; margin-bottom: 30px; max-width: 600px; text-align: left;">
+      <h3 style="color: #2c3e50;">Petunjuk Mengerjakan:</h3>
+      <ol style="padding-left: 20px; color: #2c3e50;">
+        <li>Bacalah setiap soal dengan cermat.</li>
+        <li>Pilih salah satu jawaban yang paling tepat.</li>
+        <li><strong>Tulis ulang soal dan jawaban yang kamu pilih di buku tulismu</strong>.</li>
+        <li>Kerjakan dengan jujur dan teliti.</li>
+      </ol>
+    </div>
+
     <div id="quiz"></div>
     <div id="result"></div>
     <div id="restart" style="display:none; margin-top: 20px;">
@@ -93,108 +107,131 @@
   </div>
 
   <script>
-  const soal = [
-    {
-      q: "1. 76.432 – 32.000 = …",
-      a: ["42.432", "44.432", "43.432", "45.432"],
-      k: 2
-    },
-    {
-      q: "2. 45.678 + 9.321 = …",
-      a: ["55.000", "54.999", "55.009", "54.889"],
-      k: 2
-    },
-    {
-      q: "3. Nilai tempat angka <b>6</b> pada 86.409 adalah …",
-      a: ["Ribuan", "Ratusan", "Puluhan ribu", "Satuan"],
-      k: 2
-    },
-    {
-      q: "4. 12.345 … 21.345",
-      a: [">", "<", "=", "≥"],
-      k: 1
-    },
-    {
-      q: "5. Hasil dari 98.765 – 45.321 adalah …",
-      a: ["53.444", "54.444", "55.444", "56.444"],
-      k: 1
-    },
-    {
-      q: "6. Nilai angka <b>3</b> pada 93.725 adalah …",
-      a: ["300", "30.000", "3.000", "3"],
-      k: 2
-    },
-    {
-      q: "7. 78.654 + 1.346 = …",
-      a: ["80.000", "80.010", "79.990", "79.900"],
-      k: 2
-    },
-    {
-      q: "8. 90.000, 9.000, 900, 90, 9 diurutkan dari yang terkecil adalah …",
-      a: [
-        "9, 90, 900, 9.000, 90.000",
-        "900, 90, 9.000, 9, 90.000",
-        "90.000, 9.000, 900, 90, 9",
-        "9.000, 9, 90.000, 900, 90"
-      ],
-      k: 0
-    },
-    {
-      q: "9. Nilai tempat angka <b>4</b> pada 42.678 adalah …",
-      a: ["Satuan", "Puluhan", "Puluhan ribu", "Ratusan"],
-      k: 2
-    },
-    {
-      q: "10. Urutkan dari yang terkecil: 65.432, 56.432, 75.432, 45.432",
-      a: [
-        "45.432, 56.432, 65.432, 75.432",
-        "75.432, 65.432, 56.432, 45.432",
-        "65.432, 56.432, 45.432, 75.432",
-        "56.432, 45.432, 75.432, 65.432"
-      ],
-      k: 0
+    const soal = [
+      {
+        q: "1. 76.432 – 32.000 = …",
+        a: ["42.432", "44.432", "43.432", "45.432"],
+        k: 2
+      },
+      {
+        q: "2. 45.678 + 9.321 = …",
+        a: ["55.000", "54.999", "55.009", "54.889"],
+        k: 2
+      },
+      {
+        q: "3. Nilai tempat angka <b>6</b> pada 86.409 adalah …",
+        a: ["Ribuan", "Ratusan", "Puluhan ribu", "Satuan"],
+        k: 2
+      },
+      {
+        q: "4. 12.345 … 21.345",
+        a: [">", "<", "=", "≥"],
+        k: 1
+      },
+      {
+        q: "5. Hasil dari 98.765 – 45.321 adalah …",
+        a: ["53.444", "54.444", "55.444", "56.444"],
+        k: 1
+      },
+      {
+        q: "6. Nilai angka <b>3</b> pada 93.725 adalah …",
+        a: ["300", "30.000", "3.000", "3"],
+        k: 2
+      },
+      {
+        q: "7. 78.654 + 1.346 = …",
+        a: ["80.000", "80.010", "79.990", "79.900"],
+        k: 2
+      },
+      {
+        q: "8. 90.000, 9.000, 900, 90, 9 diurutkan dari yang terkecil adalah …",
+        a: [
+          "9, 90, 900, 9.000, 90.000",
+          "900, 90, 9.000, 9, 90.000",
+          "90.000, 9.000, 900, 90, 9",
+          "9.000, 9, 90.000, 900, 90"
+        ],
+        k: 0
+      },
+      {
+        q: "9. Nilai tempat angka <b>4</b> pada 42.678 adalah …",
+        a: ["Satuan", "Puluhan", "Puluhan ribu", "Ratusan"],
+        k: 2
+      },
+      {
+        q: "10. Urutkan dari yang terkecil: 65.432, 56.432, 75.432, 45.432",
+        a: [
+          "45.432, 56.432, 65.432, 75.432",
+          "75.432, 65.432, 56.432, 45.432",
+          "65.432, 56.432, 45.432, 75.432",
+          "56.432, 45.432, 75.432, 65.432"
+        ],
+        k: 0
+      }
+    ];
+
+    let indeks = 0;
+    let benar = 0;
+
+    function tampilkanSoal() {
+      const quiz = document.getElementById("quiz");
+      if (indeks >= soal.length) {
+        quiz.innerHTML = "";
+        const nilai = Math.round((benar / soal.length) * 100);
+        document.getElementById("result").innerText = `Skor Anda: ${benar} dari ${soal.length}\nNilai: ${nilai}%`;
+        document.getElementById("restart").style.display = "block";
+        return;
+      }
+      const s = soal[indeks];
+      quiz.innerHTML = `
+        <div class="question">${s.q}</div>
+        <div class="answers">
+          ${s.a.map((j, i) => `<label><input type="radio" name="jawaban" value="${i}" /> ${j}</label>`).join('')}
+        </div>
+        <button onclick="periksaJawaban()">Next</button>
+      `;
     }
-  ];
 
-  let indeks = 0;
-  let benar = 0;
-
-  function tampilkanSoal() {
-    const quiz = document.getElementById("quiz");
-    if (indeks >= soal.length) {
-      quiz.innerHTML = "";
-      const nilai = Math.round((benar / soal.length) * 100);
-      document.getElementById("result").innerText = `Skor Anda: ${benar} dari ${soal.length}\nNilai: ${nilai}%`;
-      document.getElementById("restart").style.display = "block";
-      return;
+    function periksaJawaban() {
+      const jawaban = document.querySelector('input[name="jawaban"]:checked');
+      if (!jawaban) {
+        tampilkanPeringatan("Silakan pilih jawaban dulu!");
+        return;
+      }
+      if (parseInt(jawaban.value) === soal[indeks].k) benar++;
+      indeks++;
+      tampilkanSoal();
     }
-    const s = soal[indeks];
-    quiz.innerHTML = `
-      <div class="question">${s.q}</div>
-      <div class="answers">
-        ${s.a.map((j, i) => `<label><input type="radio" name="jawaban" value="${i}" /> ${j}</label>`).join('')}
-      </div>
-      <button onclick="periksaJawaban()">Next</button>
-    `;
-  }
 
-  function periksaJawaban() {
-    const jawaban = document.querySelector('input[name="jawaban"]:checked');
-    if (!jawaban) return alert("Pilih jawaban dulu!");
-    if (parseInt(jawaban.value) === soal[indeks].k) benar++;
-    indeks++;
+    function tampilkanPeringatan(pesan) {
+      const peringatan = document.createElement("div");
+      peringatan.innerText = pesan;
+      peringatan.style.position = "fixed";
+      peringatan.style.background = "#f8d7da";
+      peringatan.style.color = "#721c24";
+      peringatan.style.border = "1px solid #f5c6cb";
+      peringatan.style.padding = "8px 16px";
+      peringatan.style.borderRadius = "6px";
+      peringatan.style.bottom = "20px";
+      peringatan.style.left = "50%";
+      peringatan.style.transform = "translateX(-50%)";
+      peringatan.style.zIndex = "1000";
+      peringatan.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+      document.body.appendChild(peringatan);
+      setTimeout(() => {
+        peringatan.remove();
+      }, 2000);
+    }
+
+    function muatUlang() {
+      indeks = 0;
+      benar = 0;
+      document.getElementById("result").innerText = "";
+      document.getElementById("restart").style.display = "none";
+      tampilkanSoal();
+    }
+
     tampilkanSoal();
-  }
-
-  function muatUlang() {
-    indeks = 0;
-    benar = 0;
-    document.getElementById("result").innerText = "";
-    document.getElementById("restart").style.display = "none";
-    tampilkanSoal();
-  }
-
-  tampilkanSoal();
-</script>
+  </script>
 </body>
 </html>
