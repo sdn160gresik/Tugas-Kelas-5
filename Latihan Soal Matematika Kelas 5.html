@@ -149,6 +149,7 @@
         const nilai = Math.round((benar / soal.length) * 100);
         document.getElementById("result").innerText = `Skor Anda: ${benar} dari ${soal.length}\nNilai: ${nilai}%`;
         document.getElementById("restart").style.display = "block";
+        document.querySelector('.instructions').style.display = "none"; 
         return;
       }
       const s = soal[indeks];
@@ -217,3 +218,4 @@
   </script>
 </body>
 </html>
+
