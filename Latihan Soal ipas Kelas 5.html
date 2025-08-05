@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <title>Tugas IPAS</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      background-image: url('https://i.imgur.com/IFKQPGS.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .nav {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: bold;
+      background-color: white;
+      padding: 10px 15px;
+      border: 2px solid #add8e6;
+      border-radius: 8px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .answers label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    input[type="radio"] {
+      accent-color: #007bff;
+      transform: scale(1.2);
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+<a href="index.html">📘 Tugas Kelas 5</a>
+      <a href="Latihan Soal Matematika Kelas 5.html">🔢 Matematika</a>
+      <a href="#">🧪 IPAS</a>
+      <a href="Latihan Soal Seni Kelas 5.html">🎨 Seni</a>
+    </div>
+    <h1 style="color: #2c3e50; text-align: center; margin-bottom: 30px; background-color: white; padding: 10px 20px; border-radius: 10px; border: 2px solid #add8e6;">Tugas IPAS</h1>
+    <div id="quiz"></div>
+    <div id="result"></div>
+    <div id="restart" style="display:none; margin-top: 20px;">
+      <button onclick="muatUlang()">Mulai Lagi</button>
+    </div>
+  </div>
+
+  <script>
+    const soal = [
+      { q: "1. Contoh sumber cahaya alami adalah ...", a: ["Bulan", "Lilin", "Matahari", "Senter"], k: 2 },
+      { q: "2. Cahaya merambat ...", a: ["melengkung", "bergelombang", "lurus", "zig-zag"], k: 2 },
+      { q: "3. Bayangan terbentuk karena ...", a: ["Cahaya dibiaskan", "Cahaya dibiaskan", "Cahaya dihamburkan", "Cahaya terhalang"], k: 3 },
+      { q: "4. Alat optik untuk melihat benda jauh adalah ...", a: ["Mikroskop", "Teleskop", "Periskop", "Kaca pembesar"], k: 1 },
+      { q: "5. Warna pelangi terdiri dari ... warna", a: ["5", "6", "7", "8"], k: 2 },
+      { q: "6. Cahaya bulan sebenarnya berasal dari ...", a: ["Bulan sendiri", "Bintang", "Pantulan cahaya matahari", "Awan"], k: 2 },
+      { q: "7. Permukaan yang dapat memantulkan cahaya dengan baik adalah ...", a: ["Kain", "Kertas", "Cermin", "Karpet"], k: 2 },
+      { q: "8. Cermin datar menghasilkan bayangan ...", a: ["Tegak dan sama besar", "Terbalik", "Lebih besar", "Lebih kecil"], k: 0 },
+      { q: "9. Pelangi terbentuk karena adanya ...", a: ["Pembiasan cahaya", "Pemantulan cahaya", "Penyerapan cahaya", "Penghalangan cahaya"], k: 0 },
+      { q: "10. Cahaya dapat menembus benda ...", a: ["OpaK", "Bening", "Pekat", "Padat"], k: 1 },
+      { q: "11. Bayangan paling jelas terbentuk pada ...", a: ["Benda tembus cahaya", "Benda bening", "Benda opak", "Benda terang"], k: 2 },
+      { q: "12. Contoh benda yang tembus cahaya adalah ...", a: ["Kertas", "Kaca", "Kayu", "Besi"], k: 1 },
+      { q: "13. Sinar matahari mengandung ...", a: ["Cahaya putih saja", "Warna merah saja", "Berbagai warna", "Tidak berwarna"], k: 2 },
+      { q: "14. Contoh benda yang bisa memantulkan cahaya adalah ...", a: ["Cermin", "Karton", "Kain", "Batu"], k: 0 },
+      { q: "15. Cermin cekung digunakan pada ...", a: ["Periskop", "Lampu mobil", "Teleskop", "Kaca mata"], k: 1 }
+    ];
+
+    let indeks = 0;
+    let benar = 0;
+
+    function tampilkanSoal() {
+      const quiz = document.getElementById("quiz");
+      if (indeks >= soal.length) {
+        quiz.innerHTML = "";
+        const nilai = Math.round((benar / soal.length) * 100);
+        document.getElementById("result").innerText = `Skor Anda: ${benar} dari ${soal.length}\nNilai: ${nilai}%`;
+        document.getElementById("restart").style.display = "block";
+        return;
+      }
+      const s = soal[indeks];
+      quiz.innerHTML = `
+        <div class="question">${s.q}</div>
+        <div class="answers">
+          ${s.a.map((j, i) => `<label><input type="radio" name="jawaban" value="${i}" /> ${j}</label>`).join('')}
+        </div>
+        <button onclick="periksaJawaban()">Next</button>
+      `;
+    }
+
+    function periksaJawaban() {
+      const jawaban = document.querySelector('input[name="jawaban"]:checked');
+      if (!jawaban) return alert("Pilih jawaban dulu!");
+      if (parseInt(jawaban.value) === soal[indeks].k) benar++;
+      indeks++;
+      tampilkanSoal();
+    }
+
+    function muatUlang() {
+      indeks = 0;
+      benar = 0;
+      document.getElementById("result").innerText = "";
+      document.getElementById("restart").style.display = "none";
+      tampilkanSoal();
+    }
+
+    tampilkanSoal();
+  </script>
+</body>
+</html>
