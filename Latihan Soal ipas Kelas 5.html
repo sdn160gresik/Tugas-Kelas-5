@@ -42,6 +42,25 @@
       border: 2px solid #add8e6;
       border-radius: 8px;
     }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+      background-color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: 2px solid #add8e6;
+    }
+    .instructions {
+      background-color: #ffffffcc;
+      border: 2px solid #add8e6;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 30px;
+      max-width: 600px;
+      color: #2c3e50;
+      font-size: 16px;
+    }
     .question {
       margin-bottom: 20px;
     }
@@ -74,22 +93,50 @@
       transform: scale(1.2);
       margin-right: 10px;
     }
+    #peringatan {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 999;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="nav">
-<a href="index.html">📘 Tugas Kelas 5</a>
+      <a href="index.html">📘 Tugas Kelas 5</a>
       <a href="Latihan Soal Matematika Kelas 5.html">🔢 Matematika</a>
       <a href="#">🧪 IPAS</a>
       <a href="Latihan Soal Seni Kelas 5.html">🎨 Seni</a>
     </div>
-    <h1 style="color: #2c3e50; text-align: center; margin-bottom: 30px; background-color: white; padding: 10px 20px; border-radius: 10px; border: 2px solid #add8e6;">Tugas IPAS</h1>
+
+    <h1>Tugas IPAS</h1>
+
+    <div class="instructions">
+      <h3>Petunjuk Mengerjakan:</h3>
+      <ol>
+        <li>Bacalah setiap soal dengan cermat.</li>
+        <li>Pilih salah satu jawaban yang paling tepat.</li>
+        <li><strong>Tulis ulang soal dan jawaban di buku tulismu</strong>.</li>
+        <li>Kerjakan dengan jujur dan teliti.</li>
+      </ol>
+    </div>
+
     <div id="quiz"></div>
     <div id="result"></div>
     <div id="restart" style="display:none; margin-top: 20px;">
       <button onclick="muatUlang()">Mulai Lagi</button>
     </div>
+    <div id="peringatan">Silakan pilih jawaban terlebih dahulu!</div>
   </div>
 
   <script>
@@ -133,9 +180,21 @@
       `;
     }
 
+    function tampilkanPeringatan(pesan) {
+      const peringatan = document.getElementById("peringatan");
+      peringatan.innerText = pesan;
+      peringatan.style.display = "block";
+      setTimeout(() => {
+        peringatan.style.display = "none";
+      }, 2000);
+    }
+
     function periksaJawaban() {
       const jawaban = document.querySelector('input[name="jawaban"]:checked');
-      if (!jawaban) return alert("Pilih jawaban dulu!");
+      if (!jawaban) {
+        tampilkanPeringatan("Silakan pilih jawaban terlebih dahulu!");
+        return;
+      }
       if (parseInt(jawaban.value) === soal[indeks].k) benar++;
       indeks++;
       tampilkanSoal();
