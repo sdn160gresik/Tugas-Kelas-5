@@ -87,10 +87,6 @@
       color: #2c3e50;
     }
 
-    #quiz, #result, #restart {
-      display: none;
-    }
-
     .tombol-mulai {
       background-color: #007bff;
       color: white;
@@ -100,21 +96,31 @@
       cursor: pointer;
       border-radius: 8px;
       transition: background-color 0.3s ease;
+      text-decoration: none;
     }
 
     .tombol-mulai:hover {
       background-color: #0056b3;
     }
+
+    @media (max-width: 600px) {
+      .nav {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <!-- Navigasi Menu -->
     <div class="nav">
       <a href="index.html">📘 Tugas Kelas 5</a>
       <a href="#">🔢 Matematika</a>
       <a href="Latihan Soal ipas Kelas 5.html">🧪 IPAS</a>
       <a href="Latihan Soal Seni Kelas 5.html">🎨 Seni</a>
-      <a href="Latihan Soal Bahasa Inggris Kelas 5.html" class="menu-item">🗣️ Bahasa Inggris</a>
+      <a href="bahasa inggris.HTML" class="menu-item">🗣️ Bahasa Inggris</a>
       <a href="Soal_Matematika_Kelas_5.pdf" download>📥 Download</a>
     </div>
 
@@ -132,12 +138,8 @@
     </div>
 
     <!-- Tombol Mulai -->
-    <button class="tombol-mulai" onclick="alert('Soal belum tersedia!')">Mulai</button>
-    <!-- Anda bisa ganti alert() di atas dengan fungsi lain -->
-    <!-- atau arahkan ke halaman lain seperti ini:
-         <a href="latihan-matematika.html" class="tombol-mulai">Mulai</a>
-    -->
+    <a href="soal bahasa inggris.HTML" class="tombol-mulai">Mulai</a>
+
   </div>
 </body>
 </html>
-
