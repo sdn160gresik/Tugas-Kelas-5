@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tugas Matematika</title>
+  <style>
+    .kotak-soal, .kotak-jawaban {
+      background-color: white;
+      border: 2px solid #add8e6;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      background-image: url('https://i.imgur.com/IFKQPGS.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: bold;
+      background-color: white;
+      padding: 10px 15px;
+      border: 2px solid #add8e6;
+      border-radius: 8px;
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 30px;
+      background-color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: 2px solid #add8e6;
+    }
+
+    .instructions {
+      background-color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      border: 2px solid #add8e6;
+      margin-bottom: 30px;
+      max-width: 600px;
+      text-align: left;
+    }
+
+    .instructions h3 {
+      color: #2c3e50;
+    }
+
+    .instructions ol {
+      padding-left: 20px;
+      color: #2c3e50;
+    }
+
+    #quiz, #result, #restart {
+      display: none;
+    }
+
+    .tombol-mulai {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .tombol-mulai:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a href="index.html">📘 Tugas Kelas 5</a>
+      <a href="#">🔢 Matematika</a>
+      <a href="Latihan Soal ipas Kelas 5.html">🧪 IPAS</a>
+      <a href="Latihan Soal Seni Kelas 5.html">🎨 Seni</a>
+      <a href="Latihan Soal Bahasa Inggris Kelas 5.html" class="menu-item">🗣️ Bahasa Inggris</a>
+      <a href="Soal_Matematika_Kelas_5.pdf" download>📥 Download</a>
+    </div>
+
+    <h1>Tugas Matematika</h1>
+
+    <!-- Petunjuk Mengerjakan -->
+    <div class="instructions">
+      <h3>Petunjuk Mengerjakan:</h3>
+      <ol>
+        <li>Bacalah setiap soal dengan cermat.</li>
+        <li>Pilih salah satu jawaban yang paling tepat.</li>
+        <li><strong>Tulis ulang soal dan jawaban yang kamu pilih di buku tulismu</strong>.</li>
+        <li>Kerjakan dengan jujur dan teliti.</li>
+      </ol>
+    </div>
+
+    <!-- Tombol Mulai -->
+    <button class="tombol-mulai" onclick="alert('Soal belum tersedia!')">Mulai</button>
+    <!-- Anda bisa ganti alert() di atas dengan fungsi lain -->
+    <!-- atau arahkan ke halaman lain seperti ini:
+         <a href="latihan-matematika.html" class="tombol-mulai">Mulai</a>
+    -->
+  </div>
+</body>
+</html>

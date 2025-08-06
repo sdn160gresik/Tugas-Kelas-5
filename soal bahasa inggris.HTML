@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Latihan Soal - Part of Body</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://i.imgur.com/IFKQPGS.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 90%;
+      width: 800px;
+      background-color: rgba(255, 255, 255, 0); /* transparan */
+      padding: 20px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: bold;
+      background-color: white;
+      padding: 10px 15px;
+      border: 2px solid #add8e6;
+      border-radius: 8px;
+    }
+
+    h1, h3 {
+      text-align: center;
+      color: #fff;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    .question {
+      margin-bottom: 12px;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+      .question {
+        font-size: 14px;
+      }
+      button {
+        font-size: 14px;
+        width: 100%;
+      }
+      .nav {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Navigasi -->
+    <div class="nav">
+      <a href="index.html">📘 Tugas Kelas 5</a>
+      <a href="#">🔢 Matematika</a>
+      <a href="Latihan Soal ipas Kelas 5.html">🧪 IPAS</a>
+      <a href="Latihan Soal Seni Kelas 5.html">🎨 Seni</a>
+      <a href="Latihan Soal Bahasa Inggris Kelas 5.html" class="menu-item">🗣️ Bahasa Inggris</a>
+      <a href="Soal_Matematika_Kelas_5.pdf" download>📥 Download</a>
+    </div>
+
+    <h1>Latihan Soal - Part of Body</h1>
+
+    <form id="quizForm">
+      <h3>I. Arrange the letters below! (Susunlah huruf-huruf berikut!)</h3>
+      <div id="section1">
+        <div class="question">1. D – E – A – H <input type="text" name="q1" /></div>
+        <div class="question">2. R – A – I – H <input type="text" name="q2" /></div>
+        <div class="question">3. D – A – H – N <input type="text" name="q3" /></div>
+        <div class="question">4. I – N – G – E – R – F <input type="text" name="q4" /></div>
+        <div class="question">5. T – O – F – O <input type="text" name="q5" /></div>
+        <div class="question">6. S – E – Y – E <input type="text" name="q6" /></div>
+        <div class="question">7. E – S – O – N <input type="text" name="q7" /></div>
+        <div class="question">8. R – E – D – O – H – S – L – U <input type="text" name="q8" /></div>
+        <div class="question">9. H – C – O – T – S – A – M <input type="text" name="q9" /></div>
+        <div class="question">10. O – O – H – T – T <input type="text" name="q10" /></div>
+      </div>
+
+      <h3>II. Write "T" for True and "F" for False!</h3>
+      <div id="section2">
+        <div class="question">1. I have seven fingers. <input type="text" name="q11" /></div>
+        <div class="question">2. I have one head. <input type="text" name="q12" /></div>
+        <div class="question">3. I have ten toes. <input type="text" name="q13" /></div>
+        <div class="question">4. I have one hand. <input type="text" name="q14" /></div>
+        <div class="question">5. I have two neck. <input type="text" name="q15" /></div>
+        <div class="question">6. I have one eye. <input type="text" name="q16" /></div>
+        <div class="question">7. I have one hair. <input type="text" name="q17" /></div>
+        <div class="question">8. I have two hands. <input type="text" name="q18" /></div>
+        <div class="question">9. I have one nose. <input type="text" name="q19" /></div>
+        <div class="question">10. I have three stomach. <input type="text" name="q20" /></div>
+      </div>
+
+      <button type="submit">Selesai</button>
+      <button type="button" onclick="location.reload()">Mulai Lagi</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <audio id="typeSound" src="typewriter.mp3" preload="auto"></audio>
+
+  <script>
+    const correctAnswers = [
+      "head", "hair", "hand", "finger", "foot", "eyes", "nose", "shoulder", "stomach", "tooth",
+      "F", "T", "T", "F", "F", "F", "F", "T", "T", "F"
+    ];
+
+    const inputs = document.querySelectorAll("input[type='text']");
+    const typeSound = document.getElementById("typeSound");
+
+    inputs.forEach(input => {
+      input.addEventListener("input", () => {
+        typeSound.currentTime = 0;
+        typeSound.play();
+      });
+    });
+
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      let score = 0;
+
+      formData.forEach((value, key) => {
+        const index = parseInt(key.replace("q", "")) - 1;
+        if (value.trim().toLowerCase() === correctAnswers[index].toLowerCase()) {
+          score++;
+        }
+      });
+
+      const total = correctAnswers.length;
+      const percentage = Math.round((score / total) * 100);
+      let color = "red";
+      if (percentage >= 75) {
+        color = "green";
+      } else if (percentage >= 50) {
+        color = "orange";
+      }
+
+      document.getElementById("result").innerHTML =
+        `✔️ Jumlah benar: <strong>${score}</strong> dari <strong>${total}</strong> soal.<br>` +
+        `📊 Nilai: <strong style="color:${color}; font-size: 24px">${percentage}</strong>`;
+    });
+  </script>
+</body>
+</html>
