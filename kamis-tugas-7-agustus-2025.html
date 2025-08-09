@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>kamis 7 Agustus 25</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i.imgur.com/Gup5sKD.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+    }
+
+    nav img {
+      height: 50px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .judul-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .judul {
+      background-color: white;
+      color: #333;
+      font-size: 24px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      display: inline-block;
+      text-decoration: none; /* tanpa garis bawah */
+      transition: all 0.3s ease; /* animasi halus */
+    }
+
+    .judul:hover {
+      background-color: #4CAF50; /* warna hijau saat hover */
+      color: white; /* teks jadi putih */
+      transform: scale(1.05); /* sedikit membesar */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .menu {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .menu-item {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 10px 16px;
+      border-radius: 12px;
+      text-align: center;
+      width: fit-content;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .menu-item:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav img {
+        height: 40px;
+      }
+
+      .judul {
+        font-size: 20px;
+      }
+
+      .menu {
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigasi -->
+  <nav>
+    <div class="nav-logo">
+      <img src="https://i.imgur.com/sxm7RR1.png" alt="Tut Wuri">
+      <img src="https://i.imgur.com/tGA5UBc.png" alt="Logo SD">
+      <img src="https://i.imgur.com/oWB8vKW.png" alt="Logo Sekolah">
+    </div>
+  </nav>
+
+  <!-- Judul -->
+  <div class="judul-container">
+    <a href="index.html" class="judul">📘 Tugas Kelas 5</a>
+  </div>
+
+  <!-- Menu Pilihan -->
+  <div class="menu">
+    <a href="Matematika.html" class="menu-item">🔢 Matematika</a>
+    <a href="Tugas.html" class="menu-item">🧪 IPAS</a>
+    <a href="Seni.html" class="menu-item">🎨 Seni</a>
+    <a href="bahasa inggris.HTML" class="menu-item">🗣️ Bahasa Inggris</a>
+  </div>
+
+</body>
+</html>
