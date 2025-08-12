@@ -208,7 +208,8 @@
 </div>
 
 <script>
-  const soalData = [
+  // Data asli soal
+  const soalAsli = [
     {soal: "81029 : 23 = ...", opsi: ["3527", "3521", "3523", "3530"], jawaban: "3523"},
     {soal: "72480 : 24 = ...", opsi: ["3020", "3010", "3030", "3040"], jawaban: "3020"},
     {soal: "96300 : 15 = ...", opsi: ["6420", "6410", "6440", "6430"], jawaban: "6420"},
@@ -216,18 +217,41 @@
     {soal: "90720 : 48 = ...", opsi: ["1890", "1880", "1870", "1900"], jawaban: "1890"}
   ];
 
+  let soalData = [];
   let currentQuestion = 0;
   let answers = [];
+
+  // Fungsi untuk mengacak array (Fisher-Yates)
+  function acakArray(arr) {
+    const array = arr.slice();
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function prepareSoal() {
+    // Acak urutan soal
+    soalData = acakArray(soalAsli).map(q => {
+      // Acak opsi jawaban tiap soal
+      const opsiAcak = acakArray(q.opsi);
+      return {
+        soal: q.soal,
+        opsi: opsiAcak,
+        jawaban: q.jawaban
+      };
+    });
+  }
 
   function loadQuestion(index) {
     const quizDiv = document.getElementById('quiz');
     const data = soalData[index];
     quizDiv.innerHTML = `
-      <div class="soal">${index+1}. ${data.soal}</div>
+      <div class="soal">${index + 1}. ${data.soal}</div>
       <div class="pilihan">
         ${data.opsi.map(o => `
-          <button onclick="pilihJawaban('${o}', this)"
-            class="${answers[index]===o ? 'terpilih' : ''}">
+          <button onclick="pilihJawaban('${o}', this)" class="${answers[index] === o ? 'terpilih' : ''}">
             🔘 ${o}
           </button>
         `).join('')}
@@ -284,12 +308,17 @@
   function mulaiLagi() {
     currentQuestion = 0;
     answers = [];
-    loadQuestion(0);
+    prepareSoal();
+    loadQuestion(currentQuestion);
     document.getElementById('overlay').style.display = 'none';
+    document.getElementById('lihatNilaiOverlay').style.display = 'none';
   }
 
-  loadQuestion(currentQuestion);
+  // Inisialisasi soal pertama saat halaman dimuat
+  mulaiLagi();
 </script>
+
 
 </body>
 </html>
+
