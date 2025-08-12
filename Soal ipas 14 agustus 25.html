@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tantangan IPAS: Mata Manusia</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />  
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('https://i.imgur.com/IFKQPGS.png') no-repeat center center fixed;
+    background-size: cover;
+  }
+  /* Nav */
+  .nav {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 15px;
+    flex-wrap: wrap;
+  }
+  .nav a {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: bold;
+    background-color: white;
+    padding: 10px 15px;
+    border: 2px solid #add8e6;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  /* Judul */
+  .judul-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .judul {
+    color: #333;
+    font-size: 26px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.7);
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 12px;
+  }
+  /* Soal */
+  .quiz-container {
+    max-width: 500px;
+    margin: 30px auto;
+    background: rgba(255,255,255,0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .soal {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .pilihan {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .pilihan button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #dfe6e9;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.2s;
+  }
+  .pilihan button:hover {
+    background: #ffeaa7;
+  }
+  .pilihan button.terpilih {
+    background: #55efc4;
+    color: #2d3436;
+    font-weight: bold;
+  }
+  /* Tombol Navigasi */
+  .navigasi {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .prev-btn, .next-btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .prev-btn { background: #dfe6e9; }
+  .next-btn { background: #55efc4; }
+  /* Overlay umum */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .popup {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  .popup h2 {
+    font-size: 50px;
+    margin: 0;
+    color: #0984e3;
+  }
+  .popup p {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  .popup button {
+    margin-top: 15px;
+    background: #55efc4;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- Suara -->
+<audio id="clickSound" src="mouse-clicks-6849 (mp3cut.net).mp3"></audio>
+<audio id="buttonSound" src="button-press-386165 (mp3cut.net).mp3"></audio>
+<audio id="tadaSound" src="tada-234709.mp3"></audio>
+
+<!-- Nav -->
+<div class="nav">
+  <a href="index.html">📘 Tugas Kelas 5</a>
+  <a href="Soal_IPAS_Mata.pdf" download>📥 Download</a>
+</div>
+
+<!-- Judul -->
+<div class="judul-container">
+  <div class="judul">👀 Tantangan IPAS: Jelajah Rahasia Mata Manusia! 🔬</div>
+</div>
+
+<!-- Kontainer Soal -->
+<div class="quiz-container">
+  <div id="quiz"></div>
+  <div class="navigasi">
+    <button class="prev-btn" onclick="prevQuestion()" style="display:none;">⬅ Sebelumnya</button>
+    <button class="next-btn" onclick="nextQuestion()">Berikutnya ➡</button>
+  </div>
+</div>
+
+<!-- Overlay Tombol Lihat Nilai -->
+<div id="lihatNilaiOverlay" class="overlay">
+  <div class="popup">
+    <p>🎯 Kamu sudah menjawab semua soal!</p>
+    <button onclick="tampilkanNilai()">📊 Lihat Nilai</button>
+  </div>
+</div>
+
+<!-- Overlay Hasil -->
+<div id="overlay" class="overlay">
+  <div class="popup">
+    <h2 id="nilaiAkhir"></h2>
+    <p id="peringkat"></p>
+    <button onclick="mulaiLagi()">🔄 Mulai Lagi</button>
+  </div>
+</div>
+
+<script>
+  const soalData = [
+    {soal: "Bagian mata yang berfungsi meneruskan rangsang cahaya ke otak adalah …", opsi: ["Retina", "Kornea", "Saraf mata", "Pupil"], jawaban: "Saraf mata"},
+    {soal: "Fungsi iris pada mata adalah …", opsi: ["Mengatur jumlah cahaya yang masuk ke mata", "Mengatur besar kecilnya pupil dan memberi warna mata", "Memfokuskan cahaya ke retina", "Menggerakkan bola mata"], jawaban: "Mengatur besar kecilnya pupil dan memberi warna mata"},
+    {soal: "Bagian mata yang memfokuskan cahaya agar jatuh tepat di retina adalah …", opsi: ["Kornea", "Lensa mata", "Pupil", "Sklera"], jawaban: "Lensa mata"},
+    {soal: "Bagian mata yang mengatur banyaknya cahaya yang masuk ke mata adalah …", opsi: ["Pupil", "Retina", "Iris", "Kornea"], jawaban: "Iris"},
+    {soal: "Bagian mata yang berwarna bening dan menerima cahaya adalah …", opsi: ["Lensa mata", "Sklera", "Kornea", "Koroid"], jawaban: "Kornea"},
+    {soal: "Bagian mata yang menggerakkan bola mata adalah …", opsi: ["Otot mata", "Lensa mata", "Retina", "Pupil"], jawaban: "Otot mata"},
+    {soal: "Bagian mata yang peka terhadap cahaya adalah …", opsi: ["Kornea", "Retina (bintik kuning)", "Sklera", "Pupil"], jawaban: "Retina (bintik kuning)"},
+    {soal: "Bagian mata yang tidak peka terhadap cahaya adalah …", opsi: ["Pupil", "Bintik kuning", "Bintik buta", "Lensa mata"], jawaban: "Bintik buta"},
+    {soal: "Bagian mata yang terletak di antara retina dan sklera adalah …", opsi: ["Koroid", "Kornea", "Saraf mata", "Iris"], jawaban: "Koroid"},
+    {soal: "Fungsi sklera pada mata adalah …", opsi: ["Mengatur cahaya masuk ke mata", "Memfokuskan cahaya ke retina", "Melindungi bagian dalam mata", "Memberi warna pada mata"], jawaban: "Melindungi bagian dalam mata"}
+  ];
+
+  let currentQuestion = 0;
+  let answers = [];
+
+  function loadQuestion(index) {
+    const quizDiv = document.getElementById('quiz');
+    const data = soalData[index];
+    quizDiv.innerHTML = `
+      <div class="soal">${index+1}. ${data.soal}</div>
+      <div class="pilihan">
+        ${data.opsi.map(o => `
+          <button onclick="pilihJawaban('${o}', this)"
+            class="${answers[index]===o ? 'terpilih' : ''}">
+            🔘 ${o}
+          </button>
+        `).join('')}
+      </div>
+    `;
+    document.querySelector('.prev-btn').style.display = index > 0 ? 'inline-block' : 'none';
+    document.querySelector('.next-btn').style.display = index < soalData.length - 1 ? 'inline-block' : 'none';
+  }
+
+  function pilihJawaban(jawaban, btn) {
+    document.getElementById("clickSound").play();
+    answers[currentQuestion] = jawaban;
+    document.querySelectorAll('.pilihan button').forEach(b => b.classList.remove('terpilih'));
+    btn.classList.add('terpilih');
+    if (answers.filter(a => a !== undefined).length === soalData.length) {
+      document.getElementById('lihatNilaiOverlay').style.display = 'flex';
+      document.getElementById("tadaSound").play();
+    }
+  }
+
+  function nextQuestion() {
+    document.getElementById("buttonSound").play();
+    if (currentQuestion < soalData.length - 1) {
+      currentQuestion++;
+      loadQuestion(currentQuestion);
+    }
+  }
+
+  function prevQuestion() {
+    document.getElementById("buttonSound").play();
+    if (currentQuestion > 0) {
+      currentQuestion--;
+      loadQuestion(currentQuestion);
+    }
+  }
+
+  function tampilkanNilai() {
+    document.getElementById('lihatNilaiOverlay').style.display = 'none';
+    let benar = 0;
+    soalData.forEach((q, i) => {
+      if (answers[i] === q.jawaban) benar++;
+    });
+    const nilai = Math.round((benar / soalData.length) * 100);
+    let motivasi = "";
+    if (nilai === 100) motivasi = "🌟 Sempurna! Kamu Ahli Mata!";
+    else if (nilai >= 80) motivasi = "🔥 Hebat! Tinggal sedikit lagi!";
+    else if (nilai >= 60) motivasi = "💪 Bagus! Terus belajar ya!";
+    else motivasi = "🌱 Jangan menyerah, belajar akan membuatmu hebat!";
+    document.getElementById('nilaiAkhir').textContent = nilai;
+    document.getElementById('peringkat').textContent = motivasi;
+    document.getElementById('overlay').style.display = 'flex';
+  }
+
+  function mulaiLagi() {
+    currentQuestion = 0;
+    answers = [];
+    loadQuestion(0);
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  loadQuestion(currentQuestion);
+</script>
+
+</body>
+</html>
