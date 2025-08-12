@@ -86,7 +86,8 @@
   /* Tombol Navigasi */
   .navigasi {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
     margin-top: 20px;
   }
   .prev-btn, .next-btn {
@@ -94,6 +95,7 @@
     padding: 10px 15px;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
   }
   .prev-btn { background: #dfe6e9; }
   .next-btn { background: #55efc4; }
@@ -133,23 +135,19 @@
     border-radius: 8px;
     cursor: pointer;
   }
-  /* Efek berdenyut untuk tombol Lihat Nilai */
-  .pulse {
-    animation: pulse 1.2s infinite;
-  }
-  @keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(85,239,196, 0.7); }
-    70% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(85,239,196, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(85,239,196, 0); }
-  }
 </style>
 </head>
 <body>
 
+<!-- Suara -->
+<audio id="clickSound" src="mouse-clicks-6849 (mp3cut.net).mp3"></audio>
+<audio id="buttonSound" src="button-press-386165 (mp3cut.net).mp3"></audio>
+<audio id="tadaSound" src="tada-234709.mp3"></audio>
+
 <!-- Nav -->
 <div class="nav">
-  <a href="index.html">📘 Tugas Kelas 5</a>
-  <a href="Soal Latihan Pembagian.pdf" download>📥 Download</a>
+  <a href="#">📘 Tugas Kelas 5</a>
+  <a href="Soal_Matematika_Kelas_5.pdf" download>📥 Download</a>
 </div>
 
 <!-- Judul -->
@@ -170,7 +168,7 @@
 <div id="lihatNilaiOverlay" class="overlay">
   <div class="popup">
     <p>🎯 Kamu sudah menjawab semua soal!</p>
-    <button class="pulse" onclick="tampilkanNilai()">📊 Lihat Nilai</button>
+    <button onclick="tampilkanNilai()">📊 Lihat Nilai</button>
   </div>
 </div>
 
@@ -202,7 +200,7 @@
       <div class="soal">${index+1}. ${data.soal}</div>
       <div class="pilihan">
         ${data.opsi.map(o => `
-          <button onclick="pilihJawaban('${o}')"
+          <button onclick="pilihJawaban('${o}', this)"
             class="${answers[index]===o ? 'terpilih' : ''}">
             🔘 ${o}
           </button>
@@ -213,18 +211,22 @@
     document.querySelector('.next-btn').style.display = index < soalData.length - 1 ? 'inline-block' : 'none';
   }
 
-  function pilihJawaban(jawaban) {
+  function pilihJawaban(jawaban, btn) {
+    document.getElementById("clickSound").play();
     answers[currentQuestion] = jawaban;
-    if (currentQuestion < soalData.length - 1) {
-      nextQuestion();
-    } else {
-      // Jika soal terakhir sudah dijawab
+    // Hilangkan terpilih di semua tombol, lalu tandai yang dipilih
+    document.querySelectorAll('.pilihan button').forEach(b => b.classList.remove('terpilih'));
+    btn.classList.add('terpilih');
+
+    // Cek kalau semua soal sudah dijawab
+    if (answers.filter(a => a !== undefined).length === soalData.length) {
       document.getElementById('lihatNilaiOverlay').style.display = 'flex';
+      document.getElementById("tadaSound").play();
     }
-    loadQuestion(currentQuestion);
   }
 
   function nextQuestion() {
+    document.getElementById("buttonSound").play();
     if (currentQuestion < soalData.length - 1) {
       currentQuestion++;
       loadQuestion(currentQuestion);
@@ -232,6 +234,7 @@
   }
 
   function prevQuestion() {
+    document.getElementById("buttonSound").play();
     if (currentQuestion > 0) {
       currentQuestion--;
       loadQuestion(currentQuestion);
