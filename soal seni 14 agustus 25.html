@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kuis Seni Rupa</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+/* sama seperti kode aslinya */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: url('https://i.imgur.com/IFKQPGS.png') no-repeat center center fixed;
+  background-size: cover;
+}
+.nav {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 15px;
+  flex-wrap: wrap;
+}
+.nav a {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: bold;
+  background-color: white;
+  padding: 10px 15px;
+  border: 2px solid #add8e6;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.judul-container {
+  text-align: center;
+  margin-top: 20px;
+  padding: 10px;
+}
+.judul {
+  color: #333;
+  font-size: 26px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.7);
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 12px;
+}
+.petunjuk {
+  margin: 15px auto 0;
+  background: rgba(255,255,255,0.88);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  text-align: center;
+  max-width: 720px;
+  color: #2c3e50;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.petunjuk small {
+  display: block;
+  margin-top: 6px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #566574;
+  font-style: italic;
+}
+.quiz-container {
+  max-width: 500px;
+  margin: 30px auto;
+  background: rgba(255,255,255,0.9);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.soal {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+.pilihan {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pilihan button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #dfe6e9;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s;
+}
+.pilihan button:hover {
+  background: #ffeaa7;
+}
+.pilihan button.terpilih {
+  background: #55efc4;
+  color: #2d3436;
+  font-weight: bold;
+}
+.navigasi {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.prev-btn, .next-btn {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.prev-btn { background: #dfe6e9; }
+.next-btn { background: #55efc4; }
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.popup {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+.popup h2 {
+  font-size: 50px;
+  margin: 0;
+  color: #0984e3;
+}
+.popup p {
+  font-size: 18px;
+  margin-top: 10px;
+}
+.popup button {
+  margin-top: 15px;
+  background: #55efc4;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<audio id="clickSound" src="mouse-clicks-6849 (mp3cut.net).mp3"></audio>
+<audio id="buttonSound" src="button-press-386165 (mp3cut.net).mp3"></audio>
+<audio id="tadaSound" src="tada-234709.mp3"></audio>
+
+<div class="nav">
+  <a href="index.html">🎨 Kuis Seni Rupa</a>
+  <a href="Soal_Seni_Rupa.pdf" download>📥 Download</a>
+</div>
+
+<div class="judul-container">
+  <div class="judul">🌟 Petualangan Seru di Dunia Seni Rupa 🎭</div>
+  <div class="petunjuk" role="note">
+    📌 Petunjuk: <strong>Baca setiap soal dengan teliti, lalu pilih jawaban yang menurutmu benar!</strong>
+    <small>Siap-siap, imajinasimu akan diuji! 😉</small>
+  </div>
+</div>
+
+<div class="quiz-container">
+  <div id="quiz"></div>
+  <div class="navigasi">
+    <button class="prev-btn" onclick="prevQuestion()" style="display:none;">⬅ Sebelumnya</button>
+    <button class="next-btn" onclick="nextQuestion()">Berikutnya ➡</button>
+  </div>
+</div>
+
+<div id="lihatNilaiOverlay" class="overlay">
+  <div class="popup">
+    <p>🎯 Semua soal sudah dijawab!</p>
+    <button onclick="tampilkanNilai()">📊 Lihat Nilai</button>
+  </div>
+</div>
+
+<div id="overlay" class="overlay">
+  <div class="popup">
+    <h2 id="nilaiAkhir"></h2>
+    <p id="peringkat"></p>
+    <button onclick="mulaiLagi()">🔄 Coba Lagi</button>
+  </div>
+</div>
+
+<script>
+const soalAsli = [
+  {soal: "Unsur seni rupa terkecil yang dapat digunakan untuk menciptakan unsur lain adalah...", opsi: ["Garis", "Titik", "Bentuk", "Warna"], jawaban: "Titik"},
+  {soal: "Unsur seni rupa yang tersusun dari titik-titik yang berderet dan berhubungan disebut...", opsi: ["Garis", "Bidang", "Tekstur", "Nilai"], jawaban: "Garis"},
+  {soal: "Unsur seni rupa yang terbentuk dari gabungan berbagai jenis garis adalah...", opsi: ["Bidang", "Bentuk", "Ruang", "Nilai"], jawaban: "Bidang"},
+  {soal: "Bentuk merupakan unsur yang terbentuk dari tiga dimensi, yaitu...", opsi: ["Panjang, lebar, dan volume", "Panjang, lebar, dan tinggi", "Lebar, volume, dan luas", "Panjang, luas, dan isi"], jawaban: "Panjang, lebar, dan tinggi"},
+  {soal: "Unsur seni rupa yang memiliki sifat semu (dua dimensi) dan nyata (tiga dimensi) adalah...", opsi: ["Tekstur", "Ruang", "Nilai", "Garis"], jawaban: "Ruang"},
+  {soal: "Unsur seni rupa yang membuat karya menjadi lebih indah adalah...", opsi: ["Nilai", "Tekstur", "Warna", "Gelap terang"], jawaban: "Warna"},
+  {soal: "Tekstur yang tampak ada tetapi sebenarnya tidak terasa saat diraba disebut...", opsi: ["Tekstur nyata", "Tekstur semu", "Tekstur kasar", "Tekstur lembut"], jawaban: "Tekstur semu"},
+  {soal: "Unsur yang dapat membuat karya seni lebih seimbang adalah...", opsi: ["Warna", "Gelap dan terang", "Nilai", "Garis"], jawaban: "Gelap dan terang"},
+  {soal: "Unsur seni rupa yang berkaitan dengan kekuatan warna disebut...", opsi: ["Nilai", "Warna", "Bidang", "Ruang"], jawaban: "Nilai"},
+  {soal: "Prinsip seni rupa yang menekankan pada komposisi objek yang diatur secara berdekatan adalah...", opsi: ["Keseimbangan", "Kesatuan", "Proporsi", "Irama"], jawaban: "Kesatuan"}
+];
+
+let soalData = [];
+let currentQuestion = 0;
+let answers = [];
+
+function acakArray(arr) {
+  const array = arr.slice();
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function prepareSoal() {
+  soalData = acakArray(soalAsli).map(q => {
+    const opsiAcak = acakArray(q.opsi);
+    return { soal: q.soal, opsi: opsiAcak, jawaban: q.jawaban };
+  });
+}
+
+function loadQuestion(index) {
+  const quizDiv = document.getElementById('quiz');
+  const data = soalData[index];
+  quizDiv.innerHTML = `
+    <div class="soal">${index + 1}. ${data.soal}</div>
+    <div class="pilihan">
+      ${data.opsi.map(o => `
+        <button onclick="pilihJawaban('${o}', this)" class="${answers[index] === o ? 'terpilih' : ''}">
+          🎨 ${o}
+        </button>
+      `).join('')}
+    </div>
+  `;
+  document.querySelector('.prev-btn').style.display = index > 0 ? 'inline-block' : 'none';
+  document.querySelector('.next-btn').style.display = index < soalData.length - 1 ? 'inline-block' : 'none';
+}
+
+function pilihJawaban(jawaban, btn) {
+  document.getElementById("clickSound").play();
+  answers[currentQuestion] = jawaban;
+  document.querySelectorAll('.pilihan button').forEach(b => b.classList.remove('terpilih'));
+  btn.classList.add('terpilih');
+  if (answers.filter(a => a !== undefined).length === soalData.length) {
+    document.getElementById('lihatNilaiOverlay').style.display = 'flex';
+    document.getElementById("tadaSound").play();
+  }
+}
+
+function nextQuestion() {
+  document.getElementById("buttonSound").play();
+  if (currentQuestion < soalData.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function prevQuestion() {
+  document.getElementById("buttonSound").play();
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+}
+
+function tampilkanNilai() {
+  document.getElementById('lihatNilaiOverlay').style.display = 'none';
+  let benar = 0;
+  soalData.forEach((q, i) => {
+    if (answers[i] === q.jawaban) benar++;
+  });
+  const nilai = Math.round((benar / soalData.length) * 100);
+  let motivasi = "";
+  if (nilai === 100) motivasi = "🎉 Sempurna! Kamu Maestro Seni Rupa!";
+  else if (nilai >= 80) motivasi = "🔥 Hebat! Tinggal sedikit lagi jadi master!";
+  else if (nilai >= 60) motivasi = "💪 Bagus! Terus asah kreativitasmu!";
+  else motivasi = "🌱 Jangan menyerah, dunia seni menunggumu!";
+  document.getElementById('nilaiAkhir').textContent = nilai;
+  document.getElementById('peringkat').textContent = motivasi;
+  document.getElementById('overlay').style.display = 'flex';
+}
+
+function mulaiLagi() {
+  currentQuestion = 0;
+  answers = [];
+  prepareSoal();
+  loadQuestion(currentQuestion);
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('lihatNilaiOverlay').style.display = 'none';
+}
+
+mulaiLagi();
+</script>
+</body>
+</html>
