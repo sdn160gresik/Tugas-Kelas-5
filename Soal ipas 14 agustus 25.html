@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
@@ -208,7 +208,8 @@
 </div>
 
 <script>
-  const soalData = [
+  // Data soal asli tanpa diacak
+  const soalAsli = [
     {soal: "Bagian mata yang berfungsi meneruskan rangsang cahaya ke otak adalah …", opsi: ["Retina", "Kornea", "Saraf mata", "Pupil"], jawaban: "Saraf mata"},
     {soal: "Fungsi iris pada mata adalah …", opsi: ["Mengatur jumlah cahaya yang masuk ke mata", "Mengatur besar kecilnya pupil dan memberi warna mata", "Memfokuskan cahaya ke retina", "Menggerakkan bola mata"], jawaban: "Mengatur besar kecilnya pupil dan memberi warna mata"},
     {soal: "Bagian mata yang memfokuskan cahaya agar jatuh tepat di retina adalah …", opsi: ["Kornea", "Lensa mata", "Pupil", "Sklera"], jawaban: "Lensa mata"},
@@ -221,23 +222,50 @@
     {soal: "Fungsi sklera pada mata adalah …", opsi: ["Mengatur cahaya masuk ke mata", "Memfokuskan cahaya ke retina", "Melindungi bagian dalam mata", "Memberi warna pada mata"], jawaban: "Melindungi bagian dalam mata"}
   ];
 
+  // Fungsi untuk mengacak array (Fisher-Yates shuffle)
+  function acakArray(arr) {
+    const array = arr.slice(); // salin supaya tidak merubah asli
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  let soalData = [];
   let currentQuestion = 0;
   let answers = [];
+
+  function prepareSoal() {
+    // 1. Acak urutan soal
+    soalData = acakArray(soalAsli).map(q => {
+      // 2. Acak opsi jawaban tiap soal
+      const opsiAcak = acakArray(q.opsi);
+      return {
+        soal: q.soal,
+        opsi: opsiAcak,
+        jawaban: q.jawaban
+      };
+    });
+  }
 
   function loadQuestion(index) {
     const quizDiv = document.getElementById('quiz');
     const data = soalData[index];
+
+    // Tampilkan soal dan opsi (dengan tombol)
     quizDiv.innerHTML = `
       <div class="soal">${index+1}. ${data.soal}</div>
       <div class="pilihan">
         ${data.opsi.map(o => `
-          <button onclick="pilihJawaban('${o}', this)"
+          <button onclick="pilihJawaban('${o}', this)" 
             class="${answers[index]===o ? 'terpilih' : ''}">
             🔘 ${o}
           </button>
         `).join('')}
       </div>
     `;
+
     document.querySelector('.prev-btn').style.display = index > 0 ? 'inline-block' : 'none';
     document.querySelector('.next-btn').style.display = index < soalData.length - 1 ? 'inline-block' : 'none';
   }
@@ -289,13 +317,16 @@
   function mulaiLagi() {
     currentQuestion = 0;
     answers = [];
-    loadQuestion(0);
+    prepareSoal();
+    loadQuestion(currentQuestion);
     document.getElementById('overlay').style.display = 'none';
+    document.getElementById('lihatNilaiOverlay').style.display = 'none';
   }
 
-  loadQuestion(currentQuestion);
+  // Siapkan soal & tampilkan soal pertama saat halaman dimuat
+  mulaiLagi();
+
 </script>
 
 </body>
 </html>
-
