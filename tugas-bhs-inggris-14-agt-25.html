@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html>  
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Super Fun English Challenge</title>
+  <title>Tugas Bahasa Inggris</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     :root{
@@ -18,8 +18,6 @@
       background-size: cover;
       min-height: 100vh;
       color: var(--primary-text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     /* Nav */
@@ -30,7 +28,6 @@
       padding: 15px;
       flex-wrap: wrap;
     }
-
     .nav a {
       text-decoration: none;
       color: #2c3e50;
@@ -52,13 +49,34 @@
       align-items: center;
       padding: 20px;
     }
-
     .judul {
       color: #333;
       font-size: 28px;
       font-weight: 700;
       text-align: center;
       text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    }
+
+    /* Petunjuk mengerjakan */
+    .petunjuk {
+      margin-top: 12px;
+      background: rgba(255,255,255,0.88);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      text-align: center;
+      max-width: 720px;
+      color: #2c3e50;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .petunjuk small {
+      display: block;
+      margin-top: 6px;
+      font-weight: 500;
+      font-size: 13px;
+      color: #566574;
+      font-style: italic;
     }
 
     .dropdown-hari {
@@ -76,33 +94,84 @@
       transition: transform 0.3s ease, background-position 2s ease;
       animation: glowing 3s infinite;
     }
-
     @keyframes glowing {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
     .dropdown-hari:hover {
       transform: scale(1.06);
     }
-
     select option {
       font-size: 16px;
       padding: 10px;
       font-weight: bold;
     }
 
-    /* Warna opsi */
-    option[value="soal bahasa inggris.HTML"] { background-color: #ffd93d; color: #333; }
-    option[value="tugas matematika-14  Agustus 25.html"] { background-color: #48dbfb; color: #333; }
+    /* Warna tiap opsi di dropdown */
+    select option[value="Latihan Soal Bahasa Inggris Kelas 5.html"] {
+      background-color: #ffeaa7; /* kuning pastel */
+      color: #2d3436;
+    }
+    select option[value="tugas bahasa inggris-14 Agustus 25.html"] {
+      background-color: #81ecec; /* biru pastel */
+      color: #2d3436;
+    }
+    select option:checked {
+      background-color: #55efc4 !important; /* hijau mint saat dipilih */
+      color: #2d3436;
+    }
 
-    /* Footer kecil */
-    .footer-note {
-      margin-top: 30px;
+    /* Popup Peringatan */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .popup-box {
+      background: white;
+      border-radius: 18px;
+      padding: 20px 25px;
+      max-width: 320px;
       text-align: center;
-      color: rgba(0,0,0,0.55);
-      font-size: 13px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      animation: popUp 0.4s ease forwards;
+    }
+    .popup-box h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      color: #ff6b6b;
+    }
+    .popup-box p {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .popup-box button {
+      background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb);
+      background-size: 300% 300%;
+      animation: glowing 3s infinite;
+      border: none;
+      color: white;
+      font-size: 15px;
+      padding: 8px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes popUp {
+      from {transform: scale(0.8); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
     }
 
     @media (max-width: 600px) {
@@ -113,6 +182,10 @@
         font-size: 16px;
         padding: 12px 16px;
       }
+      .petunjuk {
+        font-size: 15px;
+        padding: 10px 12px;
+      }
     }
   </style>
 </head>
@@ -120,18 +193,34 @@
   <!-- Nav -->
   <div class="nav">
     <a href="index.html">📘 Tugas Kelas 5</a>
-    <a href="Soal_Matematika_Kelas_5.pdf" download>📥 Download</a>
+    <a href="Soal_Bahasa_Inggris_Kelas_5.pdf" download>📥 Download</a>
   </div>
 
   <!-- Judul & Dropdown -->
   <div class="judul-container">
     <div class="judul">🌟 Super Fun English Challenge! 📚✨</div>
 
+    <!-- Petunjuk mengerjakan -->
+    <div class="petunjuk" role="note" aria-live="polite">
+      📌 <strong>Petunjuk:</strong> Tulis soal dan jawabannya di buku tulis, kerjakan dengan teliti, dan pastikan jawabannya benar!  
+      <small>Belajar bahasa Inggris itu seru, ayo tunjukkan kemampuanmu! 💪</small>
+    </div>
+
     <select class="dropdown-hari" id="menuPelajaran" aria-label="Pilih Tanggal Tugas">
       <option value="">📅 Pilih Tanggal Tugas</option>
-      <option value="soal bahasa inggris.HTML">7 Agustus 2025</option>
-      <option value="tugas matematika-14  Agustus 25.html">14 Agustus 2025</option>
+      <option value="Latihan Soal Bahasa Inggris Kelas 5.html">7 Agustus 2025</option>
+      <option value="tugas bahasa inggris-14 Agustus 25.html">14 Agustus 2025</option>
     </select>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="popupPeringatan">
+    <div class="popup-box">
+      <h3>📅 Hold on, Superstar!</h3>
+      <p>Wah, semangatnya luar biasa! 🌟<br>
+      Tapi pilih dulu tanggal tugasnya ya, biar pas dan nggak nyasar. 🚀</p>
+      <button id="popupClose">Oke, Pilih Tanggal! 💡</button>
+    </div>
   </div>
 
   <!-- Audio efek -->
@@ -142,6 +231,8 @@
     const menu = document.getElementById('menuPelajaran');
     const hoverSound = document.getElementById('hoverSound');
     const clickSound = document.getElementById('clickSound');
+    const popup = document.getElementById('popupPeringatan');
+    const popupClose = document.getElementById('popupClose');
 
     menu.addEventListener('mouseenter', () => {
       if (hoverSound && typeof hoverSound.play === 'function') {
@@ -165,6 +256,24 @@
     menu.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && menu.value) {
         menu.dispatchEvent(new Event('change'));
+      }
+    });
+
+    const downloadLink = document.querySelector('.nav a[download]');
+    downloadLink.addEventListener('click', function (e) {
+      if (!menu.value) {
+        e.preventDefault();
+        popup.style.display = 'flex';
+      }
+    });
+
+    popupClose.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.style.display = 'none';
       }
     });
   </script>
