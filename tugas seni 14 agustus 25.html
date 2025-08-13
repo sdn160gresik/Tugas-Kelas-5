@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 <head>
 <meta charset="UTF-8" />
@@ -101,7 +101,6 @@
     transform: scale(1.08);
     box-shadow: 0 0 25px rgba(255,255,255,0.8), 0 6px 15px rgba(0,0,0,0.3);
   }
-  /* Warna opsi dropdown */
   option { 
     background-color: #fff3e0; 
     color: #333; 
@@ -199,6 +198,13 @@
   const downloadBtn = document.getElementById('downloadBtn');
   const popupOverlay = document.getElementById('popupOverlay');
   const closePopup = document.getElementById('closePopup');
+
+  // Pindah langsung ke halaman saat dropdown dipilih
+  menu.addEventListener('change', () => {
+    if (menu.value) {
+      window.location.href = menu.value;
+    }
+  });
 
   downloadBtn.addEventListener('click', (e) => {
     e.preventDefault();
