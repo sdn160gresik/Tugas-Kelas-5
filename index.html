@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
@@ -12,7 +12,6 @@
       background: url('https://i.imgur.com/Gup5sKD.png') no-repeat center center fixed;
       background-size: cover;
     }
-
     nav {
       display: flex;
       justify-content: center;
@@ -20,17 +19,7 @@
       padding: 10px 20px;
       flex-wrap: wrap;
     }
-
-    nav img {
-      height: 50px;
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
+    nav img { height: 50px; }
     .judul-container {
       display: flex;
       justify-content: center;
@@ -38,7 +27,6 @@
       flex-direction: column;
       align-items: center;
     }
-
     .judul {
       background-color: transparent;
       color: #333;
@@ -48,7 +36,6 @@
       font-weight: 700;
       text-align: center;
     }
-
     .dropdown-hari {
       margin-top: 15px;
       padding: 14px 20px;
@@ -64,23 +51,17 @@
       transition: transform 0.3s ease, background-position 2s ease;
       animation: glowing 3s infinite;
     }
-
     @keyframes glowing {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
-    .dropdown-hari:hover {
-      transform: scale(1.08);
-    }
-
+    .dropdown-hari:hover { transform: scale(1.08); }
     select option {
       font-size: 16px;
       padding: 10px;
       font-weight: bold;
     }
-
     option[value="Pancasila-5.html"] { background-color: #ff6b6b; color: white; }
     option[value="Bahasa-Indonesia-5.html"] { background-color: #4ecdc4; color: white; }
     option[value="tugas matematika.html"] { background-color: #ffd93d; color: #333; }
@@ -89,18 +70,48 @@
     option[value="Bahasa-Jawa-5.html"] { background-color: #2ec4b6; color: white; }
     option[value="tugas-bhs-inggris-14-agt-25.html"] { background-color: #1e90ff; color: white; }
     option[value="PLH-5.html"] { background-color: #3d5a80; color: white; }
-
+    /* Kotak pesan ceria */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: linear-gradient(135deg, #ff9ff3, #feca57, #54a0ff, #1dd1a1);
+      background-size: 400% 400%;
+      padding: 30px;
+      border-radius: 20px;
+      color: white;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      animation: gradientMove 5s ease infinite;
+      transition: transform 0.4s ease;
+      max-width: 300px;
+      z-index: 999;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .popup.show { transform: translate(-50%, -50%) scale(1); }
+    .popup button {
+      margin-top: 15px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 10px;
+      background-color: white;
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .popup button:hover { background-color: #ffeaa7; }
     @media (max-width: 600px) {
-      nav img {
-        height: 40px;
-      }
-      .judul {
-        font-size: 22px;
-      }
-      .dropdown-hari {
-        font-size: 16px;
-        padding: 12px 16px;
-      }
+      nav img { height: 40px; }
+      .judul { font-size: 22px; }
+      .dropdown-hari { font-size: 16px; padding: 12px 16px; }
     }
   </style>
 </head>
@@ -130,6 +141,13 @@
     </select>
   </div>
 
+  <!-- Popup ceria -->
+  <div id="popupCeria" class="popup">
+    <span id="popupText"></span>
+    <br>
+    <button onclick="tutupPopup()">OK, Siap! 😄</button>
+  </div>
+
   <!-- Audio efek -->
   <audio id="hoverSound" src="button-press-386165 (mp3cut.net).mp3" preload="auto"></audio>
   <audio id="clickSound" src="mouse-clicks-6849 (mp3cut.net).mp3" preload="auto"></audio>
@@ -138,16 +156,28 @@
     const menu = document.getElementById('menuPelajaran');
     const hoverSound = document.getElementById('hoverSound');
     const clickSound = document.getElementById('clickSound');
+    const popup = document.getElementById('popupCeria');
+    const popupText = document.getElementById('popupText');
 
-    // Suara saat kursor masuk ke elemen select (dropdown)
+    const pesan = {
+      "Pancasila-5.html": "🚧 Wah, halaman <b>Pancasila</b> masih dalam perbaikan!<br>🌟 Tetap semangat ya! Yuk pilih pelajaran lain dulu biar ilmunya makin keren!",
+      "Bahasa-Indonesia-5.html": "📚 Halo Sahabat Pintar!<br>Halaman <b>Bahasa Indonesia</b> sedang disiapkan biar makin seru!<br>💡 Yuk belajar pelajaran lain dulu sambil menunggu!",
+      "Bahasa-Jawa-5.html": "📝 Sugeng enjing, kanca pinter!<br>Halaman <b>Bahasa Jawa</b> isih didandani supaya luwih apik.<br>🌾 Sambil ngenteni, ayo sinau pelajaran liyane dhisik!",
+      "PLH-5.html": "🌱 Halo Penjaga Bumi!<br>Halaman <b>PLH</b> sedang diracik biar pembelajarannya makin hijau dan seru!<br>🌍 Sambil menunggu, yuk pilih pelajaran lain dulu!"
+    };
+
     menu.addEventListener('mouseenter', () => {
       hoverSound.currentTime = 0;
       hoverSound.play();
     });
 
-    // Suara klik saat memilih
     menu.addEventListener('change', () => {
-      if (menu.value) {
+      if (pesan[menu.value]) {
+        clickSound.currentTime = 0;
+        clickSound.play();
+        popupText.innerHTML = pesan[menu.value];
+        popup.classList.add('show');
+      } else if (menu.value) {
         clickSound.currentTime = 0;
         clickSound.play();
         setTimeout(() => {
@@ -155,7 +185,12 @@
         }, 300);
       }
     });
+
+    function tutupPopup() {
+      popup.classList.remove('show');
+      menu.value = "";
+    }
   </script>
+
 </body>
 </html>
-
